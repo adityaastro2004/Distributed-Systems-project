@@ -1,0 +1,15 @@
+version: '3'
+services:
+  node:
+    build: ../Raft-gRPC
+    environment:
+      - NODE_ID_FILE=/app/node_id.txt
+    ports:
+      - "50051-50060:50051-50060"
+    command: ["python", "run.py", "--node"]
+
+  client:
+    build: ../Raft-gRPC
+    depends_on:
+      - node
+    command: ["python", "run.py", "--client"]
